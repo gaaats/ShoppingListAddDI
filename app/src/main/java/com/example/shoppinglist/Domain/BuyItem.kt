@@ -4,7 +4,7 @@ data class BuyItem(
 
     val name: String,
     val total: Int,
-    val isBuyed: Boolean,
+    var isBuyed: Boolean,
     var id: Int = DEFAULT_INDEX
 ){
     companion object{

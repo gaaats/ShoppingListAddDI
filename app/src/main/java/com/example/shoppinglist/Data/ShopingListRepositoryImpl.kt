@@ -5,8 +5,16 @@ import com.example.shoppinglist.Domain.ShopingListRepository
 import java.lang.RuntimeException
 
 class ShopingListRepositoryImpl : ShopingListRepository {
+
     private val shopingList = mutableListOf<BuyItem>()
     private var autoIncrement = 0
+
+    init {
+        for (i in 0..5){
+            var element = BuyItem("buy $i", i, true)
+            addItemToList(element)
+        }
+    }
 
     override fun addItemToList(buyItem: BuyItem) {
         if (buyItem.id == BuyItem.DEFAULT_INDEX) {
@@ -16,9 +24,11 @@ class ShopingListRepositoryImpl : ShopingListRepository {
     }
 
     override fun edit(buyItem: BuyItem) {
-        val oldElement = take(buyItem.id)
-        shopingList.remove(oldElement)
-        addItemToList(buyItem)
+        val index = shopingList.indexOf(take(buyItem.id))
+        shopingList[index] = buyItem
+//        val oldElement = take(buyItem.id)
+//        shopingList.remove(oldElement)
+//        addItemToList(buyItem)
     }
 
     override fun getShopingList(): List<BuyItem> {
