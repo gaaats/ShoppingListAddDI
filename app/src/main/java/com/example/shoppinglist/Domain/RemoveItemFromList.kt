@@ -2,8 +2,8 @@ package com.example.shoppinglist.Domain
 
 import com.example.shoppinglist.Data.BuyItem
 
-class RemoveItemFromList {
-    fun deleteItem(buyItem: BuyItem){
-        TODO()
+class RemoveItemFromList(private val shopingListRepository: ShopingListRepository) {
+    fun deleteItem(buyItem: BuyItem) {
+        shopingListRepository.deleteItem(buyItem)
     }
 }

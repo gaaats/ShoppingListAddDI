@@ -1,7 +1,7 @@
 package com.example.shoppinglist.Domain
 
-class EditItemInShopingList {
+class EditItemInShopingList (private val shopingListRepository: ShopingListRepository) {
     fun edit(idOfItem: Int){
-        TODO()
+        shopingListRepository.edit(idOfItem)
     }
 }

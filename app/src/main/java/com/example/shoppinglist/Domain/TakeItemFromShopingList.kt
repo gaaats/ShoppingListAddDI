@@ -2,8 +2,8 @@ package com.example.shoppinglist.Domain
 
 import com.example.shoppinglist.Data.BuyItem
 
-class TakeItemFromShopingList {
+class TakeItemFromShopingList(private val shopingListRepository: ShopingListRepository) {
     fun take(idOfItem: Int): BuyItem {
-        TODO()
+       return shopingListRepository.take(idOfItem)
     }
 }
