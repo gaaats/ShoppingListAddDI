@@ -1,10 +1,15 @@
 package com.example.shoppinglist.Data
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.shoppinglist.Domain.BuyItem
 import com.example.shoppinglist.Domain.ShopingListRepository
 import java.lang.RuntimeException
 
 class ShopingListRepositoryImpl : ShopingListRepository {
+
+    private val shopListMutableLiveData_ = MutableLiveData<List<BuyItem>>()
+    val shopListLiveData: LiveData<List<BuyItem>> = shopListMutableLiveData_
 
     private val shopingList = mutableListOf<BuyItem>()
     private var autoIncrement = 0
@@ -21,26 +26,33 @@ class ShopingListRepositoryImpl : ShopingListRepository {
             buyItem.id = autoIncrement++
         }
         shopingList.add(buyItem)
+        updateShopListLiveData()
     }
 
     override fun edit(buyItem: BuyItem) {
         val index = shopingList.indexOf(take(buyItem.id))
         shopingList[index] = buyItem
+        updateShopListLiveData()
+
 //        val oldElement = take(buyItem.id)
 //        shopingList.remove(oldElement)
 //        addItemToList(buyItem)
     }
 
-    override fun getShopingList(): List<BuyItem> {
-        return shopingList.toList()
+    override fun getShopingList(): LiveData<List<BuyItem>> {
+        return shopListLiveData
     }
 
     override fun deleteItem(buyItem: BuyItem) {
         shopingList.remove(buyItem)
+        updateShopListLiveData()
     }
 
     override fun take(idOfItem: Int): BuyItem {
         return shopingList.find { it.id == idOfItem }
             ?: throw RuntimeException("there is no such element in List")
+    }
+    private fun updateShopListLiveData(){
+        shopListMutableLiveData_.value = shopingList.toList()
     }
 }

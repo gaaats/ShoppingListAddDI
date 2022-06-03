@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         vievModelMainActivity.shoppingList.observe(this){
             Log.d("kkk", it.toString())
         }
-        vievModelMainActivity.getList()
+
         vievModelMainActivity.deleteBuyItemFromList(BuyItem("buy 1", 1, true, 1))
         vievModelMainActivity.editItemEnableOrNot(BuyItem("buy 3", 3, true, 3))
 
