@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardViev"
+    android:layout_margin="4dp"
+    app:cardCornerRadius="8dp"
+    app:cardUseCompatPadding="true"
+    android:backgroundTint="@color/teal_200"
+    android:layout_width="match_parent"
+    android:elevation="12dp"
+    android:layout_height="50dp">
+
+    <LinearLayout
+        android:id="@+id/linneraLayout"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:orientation="horizontal"
+        android:weightSum="5">
+
+        <TextView
+            android:id="@+id/tvNameOfItem"
+            android:textColor="#F3EDED"
+            android:layout_marginStart="16dp"
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:text="name" />
+
+        <TextView
+            android:id="@+id/tvSumOfItem"
+            android:textColor="#F3EDED"
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="sum" />
+
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
