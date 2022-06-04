@@ -11,13 +11,13 @@ import com.example.shoppinglist.databinding.ItemToBuyActiveBinding
 
 class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopingListVievHolder>() {
 
-
+    var onBuyItemShortClickListener : ((BuyItem) -> Unit)? = null
+    var onBuyItemLongClickListener: ((BuyItem) -> Unit)? = null
     var listOfItemToBuy = listOf<BuyItem>()
         set(value) {
             field = value
             notifyDataSetChanged()
         }
-
 
     class ShopingListVievHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = ItemToBuyActiveBinding.bind(view)
@@ -32,10 +32,19 @@ class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopingListVievHold
         return ShopingListVievHolder(view)
     }
 
-    @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: ShopingListVievHolder, position: Int) {
-        holder.binding.tvNameOfItem.text = listOfItemToBuy[position].name
-        holder.binding.tvSumOfItem.text = listOfItemToBuy[position].total.toString()
+        var currentElement = listOfItemToBuy[position]
+        holder.binding.apply {
+            tvNameOfItem.text = currentElement.name
+            tvSumOfItem.text = currentElement.total.toString()
+            cardViev.setOnLongClickListener {
+                onBuyItemLongClickListener?.invoke(currentElement)
+                true
+            }
+            cardViev.setOnClickListener {
+                onBuyItemShortClickListener?.invoke(currentElement)
+            }
+        }
     }
 
     override fun getItemCount(): Int {
