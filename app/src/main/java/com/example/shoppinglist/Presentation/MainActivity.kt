@@ -32,7 +32,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun createAdapter() {
         shopListAdapter = ShopListAdapter()
-        binding.recVievHolder.adapter = shopListAdapter
+        binding.recVievHolder.apply {
+            adapter = shopListAdapter
+            recycledViewPool.setMaxRecycledViews(ShopListAdapter.NEED_TO_BUY, POOL_MAX_SIZE)
+            recycledViewPool.setMaxRecycledViews(ShopListAdapter.ALREADY_BOUGHT, POOL_MAX_SIZE)
+        }
+    }
+
+    companion object{
+        const val POOL_MAX_SIZE = 20
     }
 
 }

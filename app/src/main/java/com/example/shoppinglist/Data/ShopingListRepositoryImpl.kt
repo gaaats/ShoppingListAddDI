@@ -4,12 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.shoppinglist.Domain.BuyItem
 import com.example.shoppinglist.Domain.ShopingListRepository
+import com.github.javafaker.Faker
 import java.lang.RuntimeException
+import kotlin.random.Random
 
 class ShopingListRepositoryImpl : ShopingListRepository {
 
     private val shopListMutableLiveData_ = MutableLiveData<List<BuyItem>>()
     val shopListLiveData: LiveData<List<BuyItem>> = shopListMutableLiveData_
+    val faker = Faker()
 
 //    private val shopingList = sortedSetOf<BuyItem>({o1, o2 -> o1.id.compareTo(o2.id)})
     private val shopingList = mutableListOf<BuyItem>()
@@ -17,8 +20,9 @@ class ShopingListRepositoryImpl : ShopingListRepository {
     private var autoIncrement = 0
 
     init {
-        for (i in 0..15){
-            val element = BuyItem("buy $i", i, true)
+
+        for (i in 0..200){
+            val element = BuyItem(faker.food().fruit().toString(), i, Random.nextBoolean())
             addItemToList(element)
         }
     }
