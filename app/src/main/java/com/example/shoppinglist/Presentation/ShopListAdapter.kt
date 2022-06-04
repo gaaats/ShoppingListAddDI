@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppinglist.Domain.BuyItem
 import com.example.shoppinglist.R
@@ -15,8 +16,11 @@ class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopingListVievHold
     var onBuyItemLongClickListener: ((BuyItem) -> Unit)? = null
     var listOfItemToBuy = listOf<BuyItem>()
         set(value) {
+            val diffUtil = ShopListDiffUtillForControlChanges(field, value)
+            DiffUtil.calculateDiff(diffUtil).also {
+                it.dispatchUpdatesTo(this)
+            }
             field = value
-            notifyDataSetChanged()
         }
 
     class ShopingListVievHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -33,7 +37,7 @@ class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopingListVievHold
     }
 
     override fun onBindViewHolder(holder: ShopingListVievHolder, position: Int) {
-        var currentElement = listOfItemToBuy[position]
+        val currentElement = listOfItemToBuy[position]
         holder.binding.apply {
             tvNameOfItem.text = currentElement.name
             tvSumOfItem.text = currentElement.total.toString()
