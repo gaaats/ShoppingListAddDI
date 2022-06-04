@@ -6,25 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".Presentation.MainActivity">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:id="@+id/linLayInMain"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"/>
-
-    </ScrollView>
-
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recVievHolder"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="8dp"
-        android:visibility="gone"
+        tools:listitem="@layout/item_to_buy_active"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
