@@ -15,7 +15,7 @@ class ShopingListRepositoryImpl : ShopingListRepository {
     private var autoIncrement = 0
 
     init {
-        for (i in 0..5){
+        for (i in 0..15){
             var element = BuyItem("buy $i", i, true)
             addItemToList(element)
         }

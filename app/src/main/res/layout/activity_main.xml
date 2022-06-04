@@ -6,11 +6,25 @@
     android:layout_height="match_parent"
     tools:context=".Presentation.MainActivity">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/linLayInMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
+
+    </ScrollView>
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recVievHolder"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="8dp"
+        android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,12 +36,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:backgroundTint="@color/purple_700"
+        android:backgroundTint="#24D62B"
         android:clickable="true"
         android:contentDescription="@string/add_nev_shop_item"
         android:focusable="true"
         android:src="@drawable/ic_baseline_add_24"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
