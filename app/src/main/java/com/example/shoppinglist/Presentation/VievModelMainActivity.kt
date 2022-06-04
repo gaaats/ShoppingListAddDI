@@ -14,14 +14,17 @@ class VievModelMainActivity : ViewModel() {
     private val deleteItemFromShopingList = RemoveItemFromList(shopingListRepositoryImpl)
     private val editItemInShopingList = EditItemInShopingList(shopingListRepositoryImpl)
 
-    private val shoppingList_:LiveData<List<BuyItem>> = getShoppingList.getShopingList() as MutableLiveData<List<BuyItem>>
+    //
+    private val shoppingList_:MutableLiveData<List<BuyItem>> = getShoppingList.getShopingList() as MutableLiveData<List<BuyItem>>
+//    val shoppingList_ = getShoppingList.getShopingList()
     val shoppingList: LiveData<List<BuyItem>> = shoppingList_
 
-    fun deleteBuyItemFromList(buyItem: BuyItem){
+    fun deleteBuyItemFromList(buyItem: BuyItem) {
         deleteItemFromShopingList.deleteItem(buyItem)
 
     }
-    fun editItemEnableOrNot (buyItem: BuyItem){
+
+    fun editItemEnableOrNot(buyItem: BuyItem) {
         var itemForEditing = buyItem.copy(isBuyed = !buyItem.isBuyed)
         editItemInShopingList.edit(itemForEditing)
 

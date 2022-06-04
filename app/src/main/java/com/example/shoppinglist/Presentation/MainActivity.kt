@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.example.shoppinglist.Domain.BuyItem
 import com.example.shoppinglist.R
 import com.example.shoppinglist.databinding.ActivityMainBinding
@@ -29,17 +31,12 @@ class MainActivity : AppCompatActivity() {
     private fun shovListOfItems(list: List<BuyItem>) {
         binding.linLayInMain.removeAllViews()
         for (element in list) {
-            val typeOfLayout = if (element.id % 2 == 0) {
+            val typeOfLayout = if (element.isBuyed) {
                 R.layout.item_to_buy_not_active
             } else {
                 R.layout.item_to_buy_active
             }
-//            val typeOfLayout = if (element.isBuyed) {
-//                R.layout.item_to_buy_not_active
-//            } else {
-//                R.layout.item_to_buy_active
-//            }
-            val view = LayoutInflater.from(this).inflate(typeOfLayout, binding.linLayInMain, false)
+            var view = LayoutInflater.from(this).inflate(typeOfLayout, binding.linLayInMain, false)
             view.findViewById<TextView>(R.id.tvNameOfItem).text = element.name
             view.findViewById<TextView>(R.id.tvSumOfItem).text = element.total.toString()
             view.setOnLongClickListener {

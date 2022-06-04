@@ -11,12 +11,14 @@ class ShopingListRepositoryImpl : ShopingListRepository {
     private val shopListMutableLiveData_ = MutableLiveData<List<BuyItem>>()
     val shopListLiveData: LiveData<List<BuyItem>> = shopListMutableLiveData_
 
+//    private val shopingList = sortedSetOf<BuyItem>({o1, o2 -> o1.id.compareTo(o2.id)})
     private val shopingList = mutableListOf<BuyItem>()
+
     private var autoIncrement = 0
 
     init {
         for (i in 0..15){
-            var element = BuyItem("buy $i", i, true)
+            val element = BuyItem("buy $i", i, true)
             addItemToList(element)
         }
     }
@@ -33,10 +35,10 @@ class ShopingListRepositoryImpl : ShopingListRepository {
         val index = shopingList.indexOf(take(buyItem.id))
         shopingList[index] = buyItem
         updateShopListLiveData()
-
-//        val oldElement = take(buyItem.id)
+//
+//        val oldElement = take(buyItemImpl.id)
 //        shopingList.remove(oldElement)
-//        addItemToList(buyItem)
+//        addItemToList(buyItemImpl)
     }
 
     override fun getShopingList(): LiveData<List<BuyItem>> {
