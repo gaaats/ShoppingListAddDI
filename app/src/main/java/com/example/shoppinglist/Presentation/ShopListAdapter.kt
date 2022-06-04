@@ -56,12 +56,11 @@ class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopingListVievHold
     }
 
     override fun getItemViewType(position: Int): Int {
-        val resultType = if (listOfItemToBuy[position].isBuyed) {
+        return if (listOfItemToBuy[position].isBuyed) {
             ALREADY_BOUGHT
         } else {
             NEED_TO_BUY
         }
-        return resultType
     }
 
     companion object {
