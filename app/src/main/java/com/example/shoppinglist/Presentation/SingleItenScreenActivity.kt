@@ -7,29 +7,69 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.viewModels
+import com.example.shoppinglist.Domain.BuyItem
 import com.example.shoppinglist.R
 import com.example.shoppinglist.databinding.ActivitySingleItenScreenBinding
+import java.lang.RuntimeException
 
 class SingleItenScreenActivity : AppCompatActivity() {
 
     private val viewModelSingleItem: ViewModelSingleItem by viewModels { factoryyy() }
     lateinit var binding: ActivitySingleItenScreenBinding
+    private var mode_current = ""
+    private var item_current_id = BuyItem.DEFAULT_INDEX
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySingleItenScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        parcingIntentAndInitLocalVariables()
 
-        changeActivityToolBArTitle()
+        when (mode_current) {
+            MODE_EDIT -> {
+                Toast.makeText(this, "id: ${item_current_id}", Toast.LENGTH_LONG).show()
+                this.title = getString(R.string.edit_item_screen_title)
+                viewModelSingleItem.getItemOnActivitySingle(item_current_id)
+                viewModelSingleItem.buyItemFromGet.observe(this){
+                    binding.textInputName.setText(it.name)
+                    binding.textInputCount.setText(it.total.toString())
+                }
+                binding.btnSave.setOnClickListener {
+                    val name = binding.textInputName.text.toString()
+                    val count = binding.textInputCount.text.toString()
+                    viewModelSingleItem.editItemOnActivitySingle(name, count)
+                    viewModelSingleItem.canAppCloseScrnSingleItem.observe(this){
+                        finish()
+                    }
+                }
+
+            }
+            MODE_ADD -> {
+                this.title = getString(R.string.add_item_screen_title)
+                binding.btnSave.setOnClickListener {
+                    val name = binding.textInputName.text.toString()
+                    val count = binding.textInputCount.text.toString()
+                    viewModelSingleItem.addItemOnActivitySingle(name, count)
+                    viewModelSingleItem.canAppCloseScrnSingleItem.observe(this){
+                        finish()
+                    }
+                }
+            }
+        }
+
+
     }
 
-    private fun changeActivityToolBArTitle() {
-        this.title = if (intent.getStringExtra(MODE) == MODE_ADD) {
-            getString(R.string.add_item_screen_title)
-        } else {
-            getString(R.string.edit_item_screen_title)
+    private fun parcingIntentAndInitLocalVariables() {
+        if (!intent.hasExtra(MODE)) {
+            throw RuntimeException("there is no mode inside")
         }
+        if (!(intent.getStringExtra(MODE) == MODE_ADD || intent.getStringExtra(MODE) == MODE_EDIT)) {
+            throw RuntimeException("there is no NO SUCH MODE")
+        }
+        mode_current = intent!!.getStringExtra(MODE).toString()
+        item_current_id = intent.getIntExtra(ITEM_ID, BuyItem.DEFAULT_INDEX)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
