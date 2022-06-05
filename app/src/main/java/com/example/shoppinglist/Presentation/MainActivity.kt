@@ -1,5 +1,6 @@
 package com.example.shoppinglist.Presentation
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -31,7 +32,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun addOnClickListenerToFAB() {
         binding.floatActionBotom.setOnClickListener {
-            Toast.makeText(this, "pressed add", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, "pressed add", Toast.LENGTH_SHORT).show()
+            Intent(this, SingleItenScreenActivity::class.java).also {
+                startActivity(it)
+            }
         }
     }
 
