@@ -6,11 +6,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.activity.viewModels
 import com.example.shoppinglist.R
 import com.example.shoppinglist.databinding.ActivitySingleItenScreenBinding
 
 class SingleItenScreenActivity : AppCompatActivity() {
+
+    private val viewModelSingleItem: ViewModelSingleItem by viewModels { factoryyy() }
     lateinit var binding: ActivitySingleItenScreenBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySingleItenScreenBinding.inflate(layoutInflater)

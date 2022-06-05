@@ -14,7 +14,7 @@ import com.example.shoppinglist.Presentation.SingleItenScreenActivity.Companion.
 
 class MainActivity : AppCompatActivity() {
 
-    private val vievModelMainActivity: VievModelMainActivity by viewModels()
+    private val vievModelMainActivity: VievModelMainActivity by viewModels { factoryyy() }
     lateinit var shopListAdapter: ShopListAdapter
     lateinit var binding: ActivityMainBinding
 
