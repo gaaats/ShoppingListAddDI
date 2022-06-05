@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         addOnClickListenerToFAB()
 
         vievModelMainActivity.shoppingList.observe(this) {
-            shopListAdapter.listOfItemToBuy = it
+            shopListAdapter.submitList(it)
         }
     }
 
@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
                 return false
             }
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val itemSwiped = shopListAdapter.listOfItemToBuy[viewHolder.adapterPosition]
+                val itemSwiped = shopListAdapter.currentList[viewHolder.adapterPosition]
                 vievModelMainActivity.deleteBuyItemFromList(itemSwiped)
             }
         }
