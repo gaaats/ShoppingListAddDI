@@ -26,7 +26,7 @@ class VievModelMainActivity : ViewModel() {
     }
 
     fun changeItemEnableToAnouther(buyItem: BuyItem) {
-        var itemForEditing = buyItem.copy(isBuyed = !buyItem.isBuyed)
+        val itemForEditing = buyItem.copy(isBuyed = !buyItem.isBuyed)
         editItemInShopingList.edit(itemForEditing)
 
 

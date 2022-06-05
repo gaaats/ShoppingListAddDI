@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.SimpleCallback
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppinglist.databinding.ActivityMainBinding
+import com.example.shoppinglist.Presentation.SingleItenScreenActivity.Companion.createIntentForSingleItemAdd as createIntentForSingleItemAdd
+import com.example.shoppinglist.Presentation.SingleItenScreenActivity.Companion.createIntentForSingleItemEdit as createIntentForSingleItemEdit
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,25 +25,27 @@ class MainActivity : AppCompatActivity() {
 
         createAdapter()
         createMethodSwipeAndDelete()
-        addOnClickListenerToFAB()
+        binding.floatActionBotom.setOnClickListener {
+            createIntentForSingleItemAdd(this).also { startActivity(it) }
+        }
 
         vievModelMainActivity.shoppingList.observe(this) {
             shopListAdapter.submitList(it)
         }
     }
 
-    private fun addOnClickListenerToFAB() {
-        binding.floatActionBotom.setOnClickListener {
+//    private fun addOnClickListenerToFAB() {
+//        binding.floatActionBotom.setOnClickListener {
 //            Toast.makeText(this, "pressed add", Toast.LENGTH_SHORT).show()
-            Intent(this, SingleItenScreenActivity::class.java).also {
-                startActivity(it)
-            }
-        }
-    }
+//            Intent(this, SingleItenScreenActivity::class.java).also {
+//                startActivity(it)
+//            }
+//        }
+//    }
 
     private fun createMethodSwipeAndDelete() {
         val callBack = object :
-            SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT){
+            SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
@@ -49,6 +53,7 @@ class MainActivity : AppCompatActivity() {
             ): Boolean {
                 return false
             }
+
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val itemSwiped = shopListAdapter.currentList[viewHolder.adapterPosition]
                 vievModelMainActivity.deleteBuyItemFromList(itemSwiped)
@@ -70,12 +75,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun addShortAndLongCLickListener() {
+//        var intentEdit : Intent? = null
         shopListAdapter.apply {
             onBuyItemLongClickListener = {
                 vievModelMainActivity.changeItemEnableToAnouther(it)
             }
             onBuyItemShortClickListener = {
-                Toast.makeText(this@MainActivity, "Buy: ${it.name}", Toast.LENGTH_SHORT).show()
+                val intentEdit = createIntentForSingleItemEdit(this@MainActivity, it.id)
+                    .also { startActivity(it) }
+//                Toast.makeText(this@MainActivity, "Buy: ${it.name}", Toast.LENGTH_SHORT).show()
             }
         }
     }
