@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
     private val vievModelMainActivity: VievModelMainActivity by viewModels { factoryyy() }
     lateinit var shopListAdapter: ShopListAdapter
     lateinit var binding: ActivityMainBinding
+    lateinit var currentFrag: SingleItemScreenFragment
     var isLandScape = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,12 +31,9 @@ class MainActivity : AppCompatActivity() {
         chechIsLadscapeOrientation()
 
         if (isLandScape) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragContainerOnMainAct, SingleItemScreenFragment.newInstanceAddItem())
-                .commit()
-
+            currentFrag = SingleItemScreenFragment.newInstanceAddItem()
+            createFragmentAndCommitForLandScape()
         }
-
         createAdapter()
         createMethodSwipeAndDelete()
         binding.floatActionBotom.setOnClickListener {
@@ -100,14 +98,22 @@ class MainActivity : AppCompatActivity() {
                 vievModelMainActivity.changeItemEnableToAnouther(it)
             }
             onBuyItemShortClickListener = {
-                if (isLandScape){
+                if (isLandScape) {
+                    currentFrag = SingleItemScreenFragment.newInstanceEditItem(it.id)
+                    createFragmentAndCommitForLandScape()
 
+                } else {
+                    createIntentForSingleItemEdit(this@MainActivity, it.id)
+                        .also { startActivity(it) }
                 }
 
-                val intentEdit = createIntentForSingleItemEdit(this@MainActivity, it.id)
-                    .also { startActivity(it) }
             }
         }
+    }
+    private fun createFragmentAndCommitForLandScape(){
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragContainerOnMainAct, currentFrag)
+            .commit()
     }
 
     companion object {
