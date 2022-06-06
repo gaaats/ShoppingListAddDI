@@ -75,7 +75,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun addShortAndLongCLickListener() {
-//        var intentEdit : Intent? = null
         shopListAdapter.apply {
             onBuyItemLongClickListener = {
                 vievModelMainActivity.changeItemEnableToAnouther(it)
@@ -83,7 +82,6 @@ class MainActivity : AppCompatActivity() {
             onBuyItemShortClickListener = {
                 val intentEdit = createIntentForSingleItemEdit(this@MainActivity, it.id)
                     .also { startActivity(it) }
-//                Toast.makeText(this@MainActivity, "Buy: ${it.name}", Toast.LENGTH_SHORT).show()
             }
         }
     }

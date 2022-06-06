@@ -8,7 +8,7 @@ import com.example.shoppinglist.Domain.*
 
 class VievModelMainActivity : ViewModel() {
 
-    private val shopingListRepositoryImpl = ShopingListRepositoryImpl()
+    private val shopingListRepositoryImpl = ShopingListRepositoryImpl
 
     private val getShoppingList = GetsShopingList(shopingListRepositoryImpl)
     private val deleteItemFromShopingList = RemoveItemFromList(shopingListRepositoryImpl)

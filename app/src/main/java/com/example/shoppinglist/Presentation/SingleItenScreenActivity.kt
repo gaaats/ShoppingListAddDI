@@ -25,13 +25,18 @@ class SingleItenScreenActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         parcingIntentAndInitLocalVariables()
+        createScreen()
 
+
+    }
+
+    private fun createScreen() {
         when (mode_current) {
             MODE_EDIT -> {
                 Toast.makeText(this, "id: ${item_current_id}", Toast.LENGTH_LONG).show()
                 this.title = getString(R.string.edit_item_screen_title)
                 viewModelSingleItem.getItemOnActivitySingle(item_current_id)
-                viewModelSingleItem.buyItemFromGet.observe(this){
+                viewModelSingleItem.buyItemFromGet.observe(this) {
                     binding.textInputName.setText(it.name)
                     binding.textInputCount.setText(it.total.toString())
                 }
@@ -39,7 +44,7 @@ class SingleItenScreenActivity : AppCompatActivity() {
                     val name = binding.textInputName.text.toString()
                     val count = binding.textInputCount.text.toString()
                     viewModelSingleItem.editItemOnActivitySingle(name, count)
-                    viewModelSingleItem.canAppCloseScrnSingleItem.observe(this){
+                    viewModelSingleItem.canAppCloseScrnSingleItem.observe(this) {
                         finish()
                     }
                 }
@@ -51,14 +56,12 @@ class SingleItenScreenActivity : AppCompatActivity() {
                     val name = binding.textInputName.text.toString()
                     val count = binding.textInputCount.text.toString()
                     viewModelSingleItem.addItemOnActivitySingle(name, count)
-                    viewModelSingleItem.canAppCloseScrnSingleItem.observe(this){
+                    viewModelSingleItem.canAppCloseScrnSingleItem.observe(this) {
                         finish()
                     }
                 }
             }
         }
-
-
     }
 
     private fun parcingIntentAndInitLocalVariables() {

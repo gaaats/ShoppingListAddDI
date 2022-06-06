@@ -8,11 +8,11 @@ import com.github.javafaker.Faker
 import java.lang.RuntimeException
 import kotlin.random.Random
 
-class ShopingListRepositoryImpl : ShopingListRepository {
-    companion object{
-//        private val shopingList = mutableListOf<BuyItem>()
-            private val shopingList = sortedSetOf<BuyItem>({o1, o2 -> o1.id.compareTo(o2.id)})
-    }
+object ShopingListRepositoryImpl : ShopingListRepository {
+
+    //        private val shopingList = mutableListOf<BuyItem>()
+    private val shopingList = sortedSetOf<BuyItem>({ o1, o2 -> o1.id.compareTo(o2.id) })
+
 
     private val shopListMutableLiveData_ = MutableLiveData<List<BuyItem>>()
     val shopListLiveData: LiveData<List<BuyItem>> = shopListMutableLiveData_
@@ -22,8 +22,12 @@ class ShopingListRepositoryImpl : ShopingListRepository {
     private var autoIncrement = 0
 
     init {
-        for (i in 0..10){
-            val element = BuyItem(faker.food().fruit().toString(), Random.nextInt(1,20), Random.nextBoolean())
+        for (i in 0..10) {
+            val element = BuyItem(
+                faker.food().fruit().toString(),
+                Random.nextInt(1, 20),
+                Random.nextBoolean()
+            )
             addItemToList(element)
         }
     }
@@ -60,7 +64,8 @@ class ShopingListRepositoryImpl : ShopingListRepository {
         return shopingList.find { it.id == idOfItem }
             ?: throw RuntimeException("there is no such element in List")
     }
-    private fun updateShopListLiveData(){
+
+    private fun updateShopListLiveData() {
         shopListMutableLiveData_.value = shopingList.toList()
     }
 }

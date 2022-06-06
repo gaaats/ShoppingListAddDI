@@ -23,7 +23,7 @@ class ViewModelSingleItem : ViewModel() {
     private val _canAppCloseScrnSingleItem = MutableLiveData<Unit>()
     val canAppCloseScrnSingleItem: LiveData<Unit> = _canAppCloseScrnSingleItem
 
-    val shopListRepImpl = ShopingListRepositoryImpl()
+    val shopListRepImpl = ShopingListRepositoryImpl
 
     private val getItemShopListSingle = TakeItemFromShopingList(shopListRepImpl)
     private val editItemShopListSingle = EditItemInShopingList(shopListRepImpl)
