@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -21,24 +22,29 @@ class SingleItenScreenActivity : AppCompatActivity() {
     private var item_current_id = BuyItem.DEFAULT_INDEX
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.d("keyy", "OnCreate")
         super.onCreate(savedInstanceState)
         binding = ActivitySingleItenScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         parcingIntentAndInitLocalVariables()
 
-        createFragment().apply {
-            supportFragmentManager.beginTransaction().replace(R.id.fragmentContainer, this).commit()
+        if (savedInstanceState == null){
+            createFragment()
         }
     }
 
-    private fun createFragment(): SingleItemScreenFragment {
-        return when (mode_current) {
+    private fun createFragment() {
+        when (mode_current) {
             Constance.MODE_ADD -> {
-                SingleItemScreenFragment.newInstanceAddItem()
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainer, SingleItemScreenFragment.newInstanceAddItem())
+                    .commit()
             }
             Constance.MODE_EDIT -> {
-                SingleItemScreenFragment.newInstanceEditItem(item_current_id)
+                supportFragmentManager.beginTransaction().replace(R.id.fragmentContainer,
+                        SingleItemScreenFragment.newInstanceEditItem(item_current_id)
+                    ).commit()
             }
             else -> {
                 throw RuntimeException("There is no such MODE, I can not create FRAGMENT")

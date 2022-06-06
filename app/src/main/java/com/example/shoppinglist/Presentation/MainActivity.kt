@@ -111,8 +111,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
     private fun createFragmentAndCommitForLandScape(){
+        supportFragmentManager.popBackStack()
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragContainerOnMainAct, currentFrag)
+            .addToBackStack(null)
             .commit()
     }
 
