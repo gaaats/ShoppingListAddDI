@@ -1,6 +1,8 @@
 package com.example.shoppinglist.Presentation
 
+import android.app.Activity
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -8,6 +10,7 @@ import androidx.activity.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.SimpleCallback
 import androidx.recyclerview.widget.RecyclerView
+import com.example.shoppinglist.R
 import com.example.shoppinglist.databinding.ActivityMainBinding
 import com.example.shoppinglist.Presentation.SingleItenScreenActivity.Companion.createIntentForSingleItemAdd as createIntentForSingleItemAdd
 import com.example.shoppinglist.Presentation.SingleItenScreenActivity.Companion.createIntentForSingleItemEdit as createIntentForSingleItemEdit
@@ -17,11 +20,21 @@ class MainActivity : AppCompatActivity() {
     private val vievModelMainActivity: VievModelMainActivity by viewModels { factoryyy() }
     lateinit var shopListAdapter: ShopListAdapter
     lateinit var binding: ActivityMainBinding
+    var isLandScape = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        chechIsLadscapeOrientation()
+
+        if (isLandScape) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragContainerOnMainAct, SingleItemScreenFragment.newInstanceAddItem())
+                .commit()
+
+        }
 
         createAdapter()
         createMethodSwipeAndDelete()
@@ -31,6 +44,13 @@ class MainActivity : AppCompatActivity() {
 
         vievModelMainActivity.shoppingList.observe(this) {
             shopListAdapter.submitList(it)
+        }
+    }
+
+    private fun chechIsLadscapeOrientation() {
+        binding.guidelineCenter?.let {
+            Toast.makeText(this, "land", Toast.LENGTH_LONG).show()
+            isLandScape = true
         }
     }
 
@@ -80,6 +100,10 @@ class MainActivity : AppCompatActivity() {
                 vievModelMainActivity.changeItemEnableToAnouther(it)
             }
             onBuyItemShortClickListener = {
+                if (isLandScape){
+
+                }
+
                 val intentEdit = createIntentForSingleItemEdit(this@MainActivity, it.id)
                     .also { startActivity(it) }
             }
