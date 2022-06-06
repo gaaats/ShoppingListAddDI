@@ -83,7 +83,7 @@ class SingleItenScreenActivity : AppCompatActivity() {
 //            }
 //        })
 //    }
-//
+
 //    private fun addErrorListenerForInput() {
 //        viewModelSingleItem.errorInputNameLD.observe(this) {
 //            val messageErrorName = if (it) {

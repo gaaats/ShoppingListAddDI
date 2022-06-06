@@ -3,6 +3,8 @@ package com.example.shoppinglist.Presentation
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -37,7 +39,8 @@ class SingleItemScreenFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         parcingArgAndInitLocalVariables()
         launchCurrentScreenMode()
-
+        addErrorListenerForInput()
+        addTextChangedListenerWatcher()
     }
 
     private fun parcingArgAndInitLocalVariables() {
@@ -48,13 +51,50 @@ class SingleItemScreenFragment : Fragment() {
         if (currentMode == MODE_EDIT){
             currentId = arguments?.get(ITEM_ID) as Int
         }
-//        if (currentMode == MODE_EDIT && !requireArguments().containsKey(ITEM_ID)) {
-//            throw RuntimeException("there is no ITEM_ID inside")
-//        }
+    }
 
-//        if (currentId == BuyItem.DEFAULT_INDEX) {
-//            throw RuntimeException("there is DEFAULT ID inside ITEM")
-//        }
+    private fun addErrorListenerForInput() {
+        viewModelSingleItem.errorInputNameLD.observe(viewLifecycleOwner) {
+            val messageErrorName = if (it) {
+                getString(R.string.Wrong_title)
+            } else {
+                null
+            }
+            binding.textInLayTitle.error = messageErrorName
+        }
+
+        viewModelSingleItem.errorInputNumberLD.observe(viewLifecycleOwner) {
+            val messageErrorNumber = if (it) {
+                getString(R.string.Wrong_number)
+            } else {
+                null
+            }
+            binding.textInLayCount.error = messageErrorNumber
+        }
+    }
+    private fun addTextChangedListenerWatcher() {
+        binding.textInputName.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                viewModelSingleItem.cleanErrorInputName()
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+            }
+        })
+        binding.textInputCount.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                viewModelSingleItem.cleanErrorInputNumber()
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+            }
+        })
     }
 
     private fun launchCurrentScreenMode() {
