@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.example.shoppinglist.Domain.BuyItem
+import com.example.shoppinglist.Presentation.Constance.Constance
 import com.example.shoppinglist.R
 import com.example.shoppinglist.databinding.FragmentSingleItemScreenBinding
 import java.lang.RuntimeException
@@ -18,38 +19,37 @@ import java.lang.RuntimeException
 class SingleItemScreenFragment : Fragment() {
     private val viewModelSingleItem: ViewModelSingleItem by viewModels { faaaactory() }
     lateinit var binding: FragmentSingleItemScreenBinding
-    private var currentMode = MODE_DEFAULT
+    private var currentMode = Constance.MODE_DEFAULT
     private var currentId = BuyItem.DEFAULT_INDEX
 
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//
-//    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        parcingArgAndInitLocalVariables()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentSingleItemScreenBinding.inflate(inflater)
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        parcingArgAndInitLocalVariables()
+
         launchCurrentScreenMode()
         addErrorListenerForInput()
         addTextChangedListenerWatcher()
     }
 
     private fun parcingArgAndInitLocalVariables() {
-        if (!requireArguments().containsKey(MODE)) {
+        if (!requireArguments().containsKey(Constance.MODE)) {
             throw RuntimeException("there is no mode inside")
         }
-        currentMode = arguments?.getString(MODE).toString()
-        if (currentMode == MODE_EDIT){
-            currentId = arguments?.get(ITEM_ID) as Int
+        currentMode = arguments?.getString(Constance.MODE).toString()
+        if (currentMode == Constance.MODE_EDIT){
+            currentId = arguments?.get(Constance.ITEM_ID) as Int
         }
     }
 
@@ -99,7 +99,7 @@ class SingleItemScreenFragment : Fragment() {
 
     private fun launchCurrentScreenMode() {
         when (currentMode) {
-            MODE_EDIT -> {
+            Constance.MODE_EDIT -> {
 //                Toast.makeText(this, "id: ${item_current_id}", Toast.LENGTH_LONG).show()
                 requireActivity().title = getString(R.string.edit_item_screen_title)
                 viewModelSingleItem.getItemOnActivitySingle(currentId.toInt())
@@ -115,7 +115,7 @@ class SingleItemScreenFragment : Fragment() {
                 }
 
             }
-            MODE_ADD -> {
+            Constance.MODE_ADD -> {
                 requireActivity().title = getString(R.string.add_item_screen_title)
                 binding.btnSave.setOnClickListener {
                     val name = binding.textInputName.text?.toString()
@@ -135,36 +135,17 @@ class SingleItemScreenFragment : Fragment() {
         fun newInstanceAddItem(): SingleItemScreenFragment {
             return SingleItemScreenFragment().apply {
                 arguments = Bundle().apply {
-                    putString(MODE, MODE_ADD)
+                    putString(Constance.MODE, Constance.MODE_ADD)
                 }
             }
         }
         fun newInstanceEditItem(itemId: Int): SingleItemScreenFragment {
             return SingleItemScreenFragment().apply {
                 arguments = Bundle().apply {
-                    putString(MODE, MODE_EDIT)
-                    putInt(ITEM_ID, itemId)
+                    putString(Constance.MODE, Constance.MODE_EDIT)
+                    putInt(Constance.ITEM_ID, itemId)
                 }
             }
         }
-
-        private const val MODE = "MODE"
-        private const val MODE_ADD = "MODE_ADD"
-        private const val MODE_EDIT = "MODE_EDIT"
-        private const val MODE_DEFAULT = "MODE_DEFAULT"
-        private const val ITEM_ID = "ITEM_ID"
-
-
-//        fun createIntentForSingleItemAdd(context: Context): Intent {
-//            Intent(context, SingleItenScreenActivity::class.java).putExtra(MODE, MODE_ADD)
-//                .also { return it }
-//        }
-//
-//        fun createIntentForSingleItemEdit(context: Context, id: Int): Intent {
-//            Intent(context, SingleItenScreenActivity::class.java).putExtra(MODE, MODE_EDIT)
-//                .putExtra(ITEM_ID, id)
-//                .also { return it }
-//        }
     }
-
 }
