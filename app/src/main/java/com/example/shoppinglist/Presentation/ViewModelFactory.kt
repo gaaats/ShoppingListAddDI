@@ -1,6 +1,7 @@
 package com.example.shoppinglist.Presentation
 
 import android.app.Activity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import java.lang.IllegalArgumentException
@@ -24,3 +25,4 @@ class ViewModelFactory : ViewModelProvider.Factory {
 }
 
 fun Activity.factoryyy() = ViewModelFactory()
+fun Fragment.faaaactory() = ViewModelFactory()
