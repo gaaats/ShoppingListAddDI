@@ -7,8 +7,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
 import com.example.shoppinglist.Domain.BuyItem
 import com.example.shoppinglist.R
@@ -19,37 +17,44 @@ class SingleItemScreenFragment : Fragment() {
     private val viewModelSingleItem: ViewModelSingleItem by viewModels { faaaactory() }
     lateinit var binding: FragmentSingleItemScreenBinding
     private var currentMode = MODE_DEFAULT
-    private var currentId = ITEM_ID
+    private var currentId = BuyItem.DEFAULT_INDEX
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        parcingIntentAndInitLocalVariables()
-    }
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//
+//    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentSingleItemScreenBinding.inflate(inflater)
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        parcingArgAndInitLocalVariables()
         launchCurrentScreenMode()
-
 
     }
 
-    private fun parcingIntentAndInitLocalVariables() {
-        if (!requireArguments().containsKey(MODE)){
+    private fun parcingArgAndInitLocalVariables() {
+        if (!requireArguments().containsKey(MODE)) {
             throw RuntimeException("there is no mode inside")
         }
-        currentMode = requireArguments().getString(MODE).toString()
-        if (currentMode == MODE_EDIT && !requireArguments().containsKey(ITEM_ID)){
-            throw RuntimeException("there is no ITEM_ID inside")
+        currentMode = arguments?.getString(MODE).toString()
+        if (currentMode == MODE_EDIT){
+            currentId = arguments?.get(ITEM_ID) as Int
         }
-        currentId = requireArguments().get(ITEM_ID).toString()
+//        if (currentMode == MODE_EDIT && !requireArguments().containsKey(ITEM_ID)) {
+//            throw RuntimeException("there is no ITEM_ID inside")
+//        }
+
+//        if (currentId == BuyItem.DEFAULT_INDEX) {
+//            throw RuntimeException("there is DEFAULT ID inside ITEM")
+//        }
     }
 
     private fun launchCurrentScreenMode() {
@@ -85,25 +90,20 @@ class SingleItemScreenFragment : Fragment() {
         }
     }
 
-
-
-
-
-
     companion object {
 
         fun newInstanceAddItem(): SingleItemScreenFragment {
             return SingleItemScreenFragment().apply {
-                arguments?.apply {
+                arguments = Bundle().apply {
                     putString(MODE, MODE_ADD)
                 }
             }
         }
-        fun newInstanceEditItem(itemId : String): SingleItemScreenFragment {
+        fun newInstanceEditItem(itemId: Int): SingleItemScreenFragment {
             return SingleItemScreenFragment().apply {
-                arguments?.apply {
+                arguments = Bundle().apply {
                     putString(MODE, MODE_EDIT)
-                    putString(ITEM_ID, itemId)
+                    putInt(ITEM_ID, itemId)
                 }
             }
         }
@@ -115,16 +115,16 @@ class SingleItemScreenFragment : Fragment() {
         private const val ITEM_ID = "ITEM_ID"
 
 
-        fun createIntentForSingleItemAdd(context: Context): Intent {
-            Intent(context, SingleItenScreenActivity::class.java).putExtra(MODE, MODE_ADD)
-                .also { return it }
-        }
-
-        fun createIntentForSingleItemEdit(context: Context, id: Int): Intent {
-            Intent(context, SingleItenScreenActivity::class.java).putExtra(MODE, MODE_EDIT)
-                .putExtra(ITEM_ID, id)
-                .also { return it }
-        }
+//        fun createIntentForSingleItemAdd(context: Context): Intent {
+//            Intent(context, SingleItenScreenActivity::class.java).putExtra(MODE, MODE_ADD)
+//                .also { return it }
+//        }
+//
+//        fun createIntentForSingleItemEdit(context: Context, id: Int): Intent {
+//            Intent(context, SingleItenScreenActivity::class.java).putExtra(MODE, MODE_EDIT)
+//                .putExtra(ITEM_ID, id)
+//                .also { return it }
+//        }
     }
 
 }
