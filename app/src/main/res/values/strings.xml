@@ -6,4 +6,6 @@
     <string name="save">save</string>
     <string name="add_item_screen_title">ADD NEW ITEM TO BUY</string>
     <string name="edit_item_screen_title">EDIT ITEM</string>
+    <string name="Wrong_title">Wrong title</string>
+    <string name="Wrong_number">Wrong number</string>
 </resources>

@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -25,12 +27,59 @@ class SingleItenScreenActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         parcingIntentAndInitLocalVariables()
-        createScreen()
+        launchCurrentScreenMode()
+        addErrorListenerForInput()
+        addTextChangedListenerWatcher()
 
 
     }
 
-    private fun createScreen() {
+    private fun addTextChangedListenerWatcher() {
+        binding.textInputName.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                viewModelSingleItem.cleanErrorInputName()
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+            }
+        })
+        binding.textInputCount.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                viewModelSingleItem.cleanErrorInputNumber()
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+            }
+        })
+    }
+
+    private fun addErrorListenerForInput() {
+        viewModelSingleItem.errorInputNameLD.observe(this) {
+            val messageErrorName = if (it) {
+                getString(R.string.Wrong_title)
+            } else {
+                null
+            }
+            binding.textInLayTitle.error = messageErrorName
+        }
+
+        viewModelSingleItem.errorInputNumberLD.observe(this) {
+            val messageErrorNumber = if (it) {
+                getString(R.string.Wrong_number)
+            } else {
+                null
+            }
+            binding.textInLayCount.error = messageErrorNumber
+        }
+    }
+
+    private fun launchCurrentScreenMode() {
         when (mode_current) {
             MODE_EDIT -> {
                 Toast.makeText(this, "id: ${item_current_id}", Toast.LENGTH_LONG).show()
@@ -41,26 +90,25 @@ class SingleItenScreenActivity : AppCompatActivity() {
                     binding.textInputCount.setText(it.total.toString())
                 }
                 binding.btnSave.setOnClickListener {
-                    val name = binding.textInputName.text.toString()
-                    val count = binding.textInputCount.text.toString()
+                    val name = binding.textInputName.text?.toString()
+                    val count = binding.textInputCount.text?.toString()
                     viewModelSingleItem.editItemOnActivitySingle(name, count)
-                    viewModelSingleItem.canAppCloseScrnSingleItem.observe(this) {
-                        finish()
-                    }
+
                 }
 
             }
             MODE_ADD -> {
                 this.title = getString(R.string.add_item_screen_title)
                 binding.btnSave.setOnClickListener {
-                    val name = binding.textInputName.text.toString()
-                    val count = binding.textInputCount.text.toString()
+                    val name = binding.textInputName.text?.toString()
+                    val count = binding.textInputCount.text?.toString()
                     viewModelSingleItem.addItemOnActivitySingle(name, count)
-                    viewModelSingleItem.canAppCloseScrnSingleItem.observe(this) {
-                        finish()
-                    }
+
                 }
             }
+        }
+        viewModelSingleItem.canAppCloseScrnSingleItem.observe(this) {
+            finish()
         }
     }
 
