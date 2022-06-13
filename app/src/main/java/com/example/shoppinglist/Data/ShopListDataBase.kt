@@ -29,7 +29,6 @@ abstract class ShopListDataBase: RoomDatabase() {
                     ShopListDataBase::class.java,
                     DATA_BASE_NAME
                 )
-                    .allowMainThreadQueries()
                     .build()
                 INSTANCE = db
                 return db

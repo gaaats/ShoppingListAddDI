@@ -40,19 +40,19 @@ class ShopingListRepositoryImpl(application: Application) : ShopingListRepositor
 
 */
 
-    override fun addItemToList(buyItem: BuyItem) {
+    override suspend fun addItemToList(buyItem: BuyItem) {
         shopListDao.addShopItemToDB(mapper.mapEntityToDbItem(buyItem))
     }
 
-    override fun edit(buyItem: BuyItem) {
+    override suspend fun edit(buyItem: BuyItem) {
         shopListDao.addShopItemToDB(mapper.mapEntityToDbItem(buyItem))
     }
 
-    override fun deleteItem(buyItem: BuyItem) {
+    override suspend fun deleteItem(buyItem: BuyItem) {
         shopListDao.deleteShopItem(buyItem.id)
     }
 
-    override fun take(idOfItem: Int): BuyItem {
+    override suspend fun take(idOfItem: Int): BuyItem {
         shopListDao.getSingleItem(idOfItem).also {
             return mapper.mapDbItemToEntity(it)
         }
