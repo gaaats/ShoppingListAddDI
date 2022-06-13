@@ -8,7 +8,7 @@ data class BuyItem(
     var id: Int = DEFAULT_INDEX
 ){
     companion object{
-        const val DEFAULT_INDEX = -1
+        const val DEFAULT_INDEX = 0
     }
 }
 

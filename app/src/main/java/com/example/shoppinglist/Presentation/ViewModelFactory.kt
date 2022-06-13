@@ -9,8 +9,8 @@ import java.lang.IllegalArgumentException
 class ViewModelFactory : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         val result = when (modelClass) {
-            ViewModelSingleItem::class.java -> ViewModelSingleItem()
-            VievModelMainActivity::class.java -> VievModelMainActivity()
+//            ViewModelSingleItem::class.java -> ViewModelSingleItem()
+//            VievModelMainActivity::class.java -> VievModelMainActivity()
             else -> {throw IllegalArgumentException("there is no such class")}
         }
         return result as T

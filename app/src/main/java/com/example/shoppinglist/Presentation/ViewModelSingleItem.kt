@@ -1,5 +1,7 @@
 package com.example.shoppinglist.Presentation
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,7 +11,7 @@ import com.example.shoppinglist.Domain.BuyItem
 import com.example.shoppinglist.Domain.EditItemInShopingList
 import com.example.shoppinglist.Domain.TakeItemFromShopingList
 
-class ViewModelSingleItem : ViewModel() {
+class ViewModelSingleItem(application: Application) : AndroidViewModel(application) {
 
     private val _errorInputNameLD = MutableLiveData<Boolean>()
     val errorInputNameLD: LiveData<Boolean> = _errorInputNameLD
@@ -23,7 +25,7 @@ class ViewModelSingleItem : ViewModel() {
     private val _canAppCloseScrnSingleItem = MutableLiveData<Unit>()
     val canAppCloseScrnSingleItem: LiveData<Unit> = _canAppCloseScrnSingleItem
 
-    val shopListRepImpl = ShopingListRepositoryImpl
+    val shopListRepImpl = ShopingListRepositoryImpl(application)
 
     private val getItemShopListSingle = TakeItemFromShopingList(shopListRepImpl)
     private val editItemShopListSingle = EditItemInShopingList(shopListRepImpl)

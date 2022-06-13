@@ -1,14 +1,16 @@
 package com.example.shoppinglist.Presentation
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.shoppinglist.Data.ShopingListRepositoryImpl
 import com.example.shoppinglist.Domain.*
 
-class VievModelMainActivity : ViewModel() {
+class VievModelMainActivity(application: Application) : AndroidViewModel(application) {
 
-    private val shopingListRepositoryImpl = ShopingListRepositoryImpl
+    private val shopingListRepositoryImpl = ShopingListRepositoryImpl(application)
 
     private val getShoppingList = GetsShopingList(shopingListRepositoryImpl)
     private val deleteItemFromShopingList = RemoveItemFromList(shopingListRepositoryImpl)
@@ -16,9 +18,9 @@ class VievModelMainActivity : ViewModel() {
     private val takeItemFromShopingList = TakeItemFromShopingList(shopingListRepositoryImpl)
 
     //
-    private val shoppingList_:MutableLiveData<List<BuyItem>> = getShoppingList.getShopingList() as MutableLiveData<List<BuyItem>>
+    private val _shoppingList:MutableLiveData<List<BuyItem>> = getShoppingList.getShopingList() as MutableLiveData<List<BuyItem>>
 //    val shoppingList_ = getShoppingList.getShopingList()
-    val shoppingList: LiveData<List<BuyItem>> = shoppingList_
+    val shoppingList: LiveData<List<BuyItem>> = _shoppingList
 
     fun deleteBuyItemFromList(buyItem: BuyItem) {
         deleteItemFromShopingList.deleteItem(buyItem)

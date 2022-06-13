@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.SimpleCallback
 import androidx.recyclerview.widget.RecyclerView
@@ -17,7 +18,7 @@ import com.example.shoppinglist.Presentation.SingleItenScreenActivity.Companion.
 
 class MainActivity : AppCompatActivity() {
 
-    private val vievModelMainActivity: VievModelMainActivity by viewModels { factoryyy() }
+    private lateinit var vievModelMainActivity: VievModelMainActivity
     lateinit var shopListAdapter: ShopListAdapter
     lateinit var binding: ActivityMainBinding
     lateinit var currentFrag: SingleItemScreenFragment
@@ -27,6 +28,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        vievModelMainActivity = ViewModelProvider(this)[VievModelMainActivity::class.java]
 
         chechIsLadscapeOrientation()
 

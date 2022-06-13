@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.example.shoppinglist.Domain.BuyItem
 import com.example.shoppinglist.Presentation.Constance.Constance
 import com.example.shoppinglist.R
@@ -17,7 +18,7 @@ import com.example.shoppinglist.databinding.FragmentSingleItemScreenBinding
 import java.lang.RuntimeException
 
 class SingleItemScreenFragment : Fragment() {
-    private val viewModelSingleItem: ViewModelSingleItem by viewModels { faaaactory() }
+    private lateinit var viewModelSingleItem: ViewModelSingleItem
     lateinit var binding: FragmentSingleItemScreenBinding
     private var currentMode = Constance.MODE_DEFAULT
     private var currentId = BuyItem.DEFAULT_INDEX
@@ -37,6 +38,8 @@ class SingleItemScreenFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModelSingleItem = ViewModelProvider(this)[ViewModelSingleItem::class.java]
 
         launchCurrentScreenMode()
         addErrorListenerForInput()
