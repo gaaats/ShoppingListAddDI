@@ -1,15 +1,19 @@
 package com.example.shoppinglist.Presentation
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
+import androidx.lifecycle.*
 import com.example.shoppinglist.Data.ShopingListRepositoryImpl
 import com.example.shoppinglist.Domain.AddItemToList
 import com.example.shoppinglist.Domain.BuyItem
 import com.example.shoppinglist.Domain.EditItemInShopingList
 import com.example.shoppinglist.Domain.TakeItemFromShopingList
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 
 class ViewModelSingleItem(application: Application) : AndroidViewModel(application) {
 
@@ -32,7 +36,9 @@ class ViewModelSingleItem(application: Application) : AndroidViewModel(applicati
     private val addItemShopListSingle = AddItemToList(shopListRepImpl)
 
     fun getItemOnActivitySingle(buyItemId: Int) {
-        _buyItemFromGet.value = getItemShopListSingle.take(buyItemId)
+        viewModelScope.launch {
+            _buyItemFromGet.value = getItemShopListSingle.take(buyItemId)
+        }
     }
 
     fun addItemOnActivitySingle(inputString: String?, inputNumber: String?) {
@@ -41,7 +47,9 @@ class ViewModelSingleItem(application: Application) : AndroidViewModel(applicati
         val isValid = validating(name, count)
         if (isValid) {
             val elementToAdd = BuyItem(name, count, true)
-            addItemShopListSingle.addItemToList(elementToAdd)
+            viewModelScope.launch {
+                addItemShopListSingle.addItemToList(elementToAdd)
+            }
             appCanCloseScreen()
         }
     }
@@ -54,7 +62,9 @@ class ViewModelSingleItem(application: Application) : AndroidViewModel(applicati
         if (isValid) {
             buyItemFromGet.value?.let {
                 val curElem = it.copy(name = nameAfterParse, total = countAfterParse)
-                editItemShopListSingle.edit(curElem)
+                viewModelScope.launch {
+                    editItemShopListSingle.edit(curElem)
+                }
             }
             appCanCloseScreen()
         }

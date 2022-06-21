@@ -1,12 +1,13 @@
 package com.example.shoppinglist.Presentation
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.example.shoppinglist.Data.ShopingListRepositoryImpl
 import com.example.shoppinglist.Domain.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 
 class VievModelMainActivity(application: Application) : AndroidViewModel(application) {
 
@@ -17,20 +18,20 @@ class VievModelMainActivity(application: Application) : AndroidViewModel(applica
     private val editItemInShopingList = EditItemInShopingList(shopingListRepositoryImpl)
     private val takeItemFromShopingList = TakeItemFromShopingList(shopingListRepositoryImpl)
 
-    //
     private val _shoppingList:MutableLiveData<List<BuyItem>> = getShoppingList.getShopingList() as MutableLiveData<List<BuyItem>>
 //    val shoppingList_ = getShoppingList.getShopingList()
     val shoppingList: LiveData<List<BuyItem>> = _shoppingList
 
     fun deleteBuyItemFromList(buyItem: BuyItem) {
-        deleteItemFromShopingList.deleteItem(buyItem)
-
+        viewModelScope.launch {
+            deleteItemFromShopingList.deleteItem(buyItem)
+        }
     }
 
     fun changeItemEnableToAnouther(buyItem: BuyItem) {
         val itemForEditing = buyItem.copy(isBuyed = !buyItem.isBuyed)
-        editItemInShopingList.edit(itemForEditing)
-
-
+        viewModelScope.launch {
+            editItemInShopingList.edit(itemForEditing)
+        }
     }
 }

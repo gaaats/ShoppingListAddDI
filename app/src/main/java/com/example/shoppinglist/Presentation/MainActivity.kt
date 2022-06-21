@@ -108,7 +108,6 @@ class MainActivity : AppCompatActivity() {
                     createIntentForSingleItemEdit(this@MainActivity, it.id)
                         .also { startActivity(it) }
                 }
-
             }
         }
     }
@@ -119,9 +118,7 @@ class MainActivity : AppCompatActivity() {
             .addToBackStack(null)
             .commit()
     }
-
     companion object {
         const val POOL_MAX_SIZE = 20
     }
-
 }
