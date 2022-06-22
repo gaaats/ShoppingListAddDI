@@ -1,5 +1,6 @@
 package com.example.shoppinglist.Presentation
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -12,8 +13,18 @@ import com.example.shoppinglist.Domain.model.BuyItem
 import com.example.shoppinglist.Presentation.Constance.Constance
 import com.example.shoppinglist.R
 import com.example.shoppinglist.databinding.FragmentSingleItemScreenBinding
+import com.example.shoppinglist.di.ShopLIstAPP
+import javax.inject.Inject
 
 class SingleItemScreenFragment : Fragment() {
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private val component by lazy {
+        (requireActivity().application as ShopLIstAPP).component
+    }
+
     private lateinit var viewModelSingleItem: ViewModelSingleItem
     lateinit var binding: FragmentSingleItemScreenBinding
     private var currentMode = Constance.MODE_DEFAULT
@@ -22,6 +33,11 @@ class SingleItemScreenFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         parcingArgAndInitLocalVariables()
+    }
+
+    override fun onAttach(context: Context) {
+        component.inject(this)
+        super.onAttach(context)
     }
 
     override fun onCreateView(

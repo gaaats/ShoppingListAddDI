@@ -13,10 +13,19 @@ import androidx.recyclerview.widget.ItemTouchHelper.SimpleCallback
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppinglist.R
 import com.example.shoppinglist.databinding.ActivityMainBinding
+import com.example.shoppinglist.di.ShopLIstAPP
+import javax.inject.Inject
 import com.example.shoppinglist.Presentation.SingleItenScreenActivity.Companion.createIntentForSingleItemAdd as createIntentForSingleItemAdd
 import com.example.shoppinglist.Presentation.SingleItenScreenActivity.Companion.createIntentForSingleItemEdit as createIntentForSingleItemEdit
 
 class MainActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private val component by lazy {
+        (application as ShopLIstAPP).component
+    }
 
     private lateinit var vievModelMainActivity: VievModelMainActivity
     lateinit var shopListAdapter: ShopListAdapter
@@ -28,10 +37,11 @@ class MainActivity : AppCompatActivity() {
     var isLandScape = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        component.inject(this)
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        vievModelMainActivity = ViewModelProvider(this)[VievModelMainActivity::class.java]
+        vievModelMainActivity = ViewModelProvider(this, viewModelFactory)[VievModelMainActivity::class.java]
 
         chechIsLadscapeOrientation()
 
