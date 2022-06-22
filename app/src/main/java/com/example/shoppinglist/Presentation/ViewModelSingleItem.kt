@@ -8,8 +8,13 @@ import com.example.shoppinglist.Domain.model.BuyItem
 import com.example.shoppinglist.Domain.usecase.EditItemInShopingList
 import com.example.shoppinglist.Domain.usecase.TakeItemFromShopingList
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ViewModelSingleItem(application: Application) : AndroidViewModel(application) {
+class ViewModelSingleItem @Inject constructor(
+    private val getItemShopListSingle: TakeItemFromShopingList,
+    private val editItemShopListSingle: EditItemInShopingList,
+    private val addItemShopListSingle: AddItemToList
+) : ViewModel() {
 
     private val _errorInputNameLD = MutableLiveData<Boolean>()
     val errorInputNameLD: LiveData<Boolean> = _errorInputNameLD
@@ -22,12 +27,6 @@ class ViewModelSingleItem(application: Application) : AndroidViewModel(applicati
 
     private val _canAppCloseScrnSingleItem = MutableLiveData<Unit>()
     val canAppCloseScrnSingleItem: LiveData<Unit> = _canAppCloseScrnSingleItem
-
-    val shopListRepImpl = ShopingListRepositoryImpl(application)
-
-    private val getItemShopListSingle = TakeItemFromShopingList(shopListRepImpl)
-    private val editItemShopListSingle = EditItemInShopingList(shopListRepImpl)
-    private val addItemShopListSingle = AddItemToList(shopListRepImpl)
 
     fun getItemOnActivitySingle(buyItemId: Int) {
         viewModelScope.launch {

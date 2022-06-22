@@ -9,18 +9,19 @@ import com.example.shoppinglist.Domain.usecase.GetsShopingList
 import com.example.shoppinglist.Domain.usecase.RemoveItemFromList
 import com.example.shoppinglist.Domain.usecase.TakeItemFromShopingList
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class VievModelMainActivity(application: Application) : AndroidViewModel(application) {
+class VievModelMainActivity @Inject constructor(
+    private val getShoppingList: GetsShopingList,
+    private val deleteItemFromShopingList: RemoveItemFromList,
+    private val editItemInShopingList: EditItemInShopingList,
+    private val takeItemFromShopingList: TakeItemFromShopingList
+) : ViewModel() {
 
-    private val shopingListRepositoryImpl = ShopingListRepositoryImpl(application)
 
-    private val getShoppingList = GetsShopingList(shopingListRepositoryImpl)
-    private val deleteItemFromShopingList = RemoveItemFromList(shopingListRepositoryImpl)
-    private val editItemInShopingList = EditItemInShopingList(shopingListRepositoryImpl)
-    private val takeItemFromShopingList = TakeItemFromShopingList(shopingListRepositoryImpl)
+    private val _shoppingList: MutableLiveData<List<BuyItem>> =
+        getShoppingList.getShopingList() as MutableLiveData<List<BuyItem>>
 
-    private val _shoppingList:MutableLiveData<List<BuyItem>> = getShoppingList.getShopingList() as MutableLiveData<List<BuyItem>>
-//    val shoppingList_ = getShoppingList.getShopingList()
     val shoppingList: LiveData<List<BuyItem>> = _shoppingList
 
     fun deleteBuyItemFromList(buyItem: BuyItem) {

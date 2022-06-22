@@ -6,11 +6,13 @@ import androidx.lifecycle.Transformations
 import com.example.shoppinglist.Data.mapper.Mapper
 import com.example.shoppinglist.Domain.model.BuyItem
 import com.example.shoppinglist.Domain.repository.ShopingListRepository
+import javax.inject.Inject
 
-class ShopingListRepositoryImpl(application: Application) : ShopingListRepository {
+class ShopingListRepositoryImpl @Inject constructor(
+    private val shopListDao: ShopListDAO,
+    private val mapper: Mapper
+) : ShopingListRepository {
 
-    private val shopListDao = ShopListDataBase.getDataBase(application).getShopListDAO()
-    private val mapper = Mapper()
     /*
     OLD, VITHOUT DATABASE
 //    //        private val shopingList = mutableListOf<BuyItem>()
