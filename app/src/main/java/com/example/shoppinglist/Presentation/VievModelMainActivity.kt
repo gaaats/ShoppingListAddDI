@@ -3,10 +3,11 @@ package com.example.shoppinglist.Presentation
 import android.app.Application
 import androidx.lifecycle.*
 import com.example.shoppinglist.Data.ShopingListRepositoryImpl
-import com.example.shoppinglist.Domain.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancel
+import com.example.shoppinglist.Domain.model.BuyItem
+import com.example.shoppinglist.Domain.usecase.EditItemInShopingList
+import com.example.shoppinglist.Domain.usecase.GetsShopingList
+import com.example.shoppinglist.Domain.usecase.RemoveItemFromList
+import com.example.shoppinglist.Domain.usecase.TakeItemFromShopingList
 import kotlinx.coroutines.launch
 
 class VievModelMainActivity(application: Application) : AndroidViewModel(application) {

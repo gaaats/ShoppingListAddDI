@@ -2,7 +2,6 @@ package com.example.shoppinglist.Data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.shoppinglist.Domain.BuyItem
 
 @Entity(tableName = "shop_items")
 data class ShopItemDBModel(

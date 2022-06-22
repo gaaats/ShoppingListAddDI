@@ -1,18 +1,12 @@
 package com.example.shoppinglist.Presentation
 
 import android.app.Application
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
 import androidx.lifecycle.*
 import com.example.shoppinglist.Data.ShopingListRepositoryImpl
-import com.example.shoppinglist.Domain.AddItemToList
-import com.example.shoppinglist.Domain.BuyItem
-import com.example.shoppinglist.Domain.EditItemInShopingList
-import com.example.shoppinglist.Domain.TakeItemFromShopingList
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancel
+import com.example.shoppinglist.Domain.usecase.AddItemToList
+import com.example.shoppinglist.Domain.model.BuyItem
+import com.example.shoppinglist.Domain.usecase.EditItemInShopingList
+import com.example.shoppinglist.Domain.usecase.TakeItemFromShopingList
 import kotlinx.coroutines.launch
 
 class ViewModelSingleItem(application: Application) : AndroidViewModel(application) {

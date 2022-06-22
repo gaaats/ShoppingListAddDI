@@ -1,6 +1,7 @@
-package com.example.shoppinglist.Domain
+package com.example.shoppinglist.Domain.repository
 
 import androidx.lifecycle.LiveData
+import com.example.shoppinglist.Domain.model.BuyItem
 
 interface ShopingListRepository {
     suspend fun addItemToList(buyItem: BuyItem)

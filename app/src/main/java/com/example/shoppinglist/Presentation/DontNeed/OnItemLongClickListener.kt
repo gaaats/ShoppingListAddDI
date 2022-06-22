@@ -1,6 +1,6 @@
 package com.example.shoppinglist.Presentation
 
-import com.example.shoppinglist.Domain.BuyItem
+import com.example.shoppinglist.Domain.model.BuyItem
 
 interface OnBuyItemLongClickListener {
     fun pressedOnItem(buyItem: BuyItem)

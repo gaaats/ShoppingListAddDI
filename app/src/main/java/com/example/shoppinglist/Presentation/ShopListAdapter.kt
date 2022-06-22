@@ -3,7 +3,7 @@ package com.example.shoppinglist.Presentation
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import com.example.shoppinglist.Domain.BuyItem
+import com.example.shoppinglist.Domain.model.BuyItem
 import com.example.shoppinglist.R
 import com.example.shoppinglist.Presentation.ShopListDiffUtillForListAdapter as ShopListDiffUtillForListAdapter
 

@@ -1,7 +1,7 @@
 package com.example.shoppinglist.Presentation.DontNeed
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.shoppinglist.Domain.BuyItem
+import com.example.shoppinglist.Domain.model.BuyItem
 
 class ShopListDiffUtillForControlChanges(
     private val oldList: List<BuyItem>,

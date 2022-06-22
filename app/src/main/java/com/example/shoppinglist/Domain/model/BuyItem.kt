@@ -1,4 +1,4 @@
-package com.example.shoppinglist.Domain
+package com.example.shoppinglist.Domain.model
 
 data class BuyItem(
 
