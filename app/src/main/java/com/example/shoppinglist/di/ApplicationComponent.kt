@@ -11,10 +11,8 @@ import javax.inject.Inject
 @Component(modules = [DataModule::class, VievModelModules::class])
 interface ApplicationComponent {
 
-    @Inject
     fun inject(activity: MainActivity)
 
-    @Inject
     fun inject(fragment: SingleItemScreenFragment)
 
     @Component.Factory

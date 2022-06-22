@@ -18,6 +18,7 @@ import javax.inject.Inject
 
 class SingleItemScreenFragment : Fragment() {
 
+
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
@@ -51,7 +52,7 @@ class SingleItemScreenFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModelSingleItem = ViewModelProvider(this)[ViewModelSingleItem::class.java]
+        viewModelSingleItem = ViewModelProvider(this, viewModelFactory)[ViewModelSingleItem::class.java]
 
         launchCurrentScreenMode()
         addErrorListenerForInput()
