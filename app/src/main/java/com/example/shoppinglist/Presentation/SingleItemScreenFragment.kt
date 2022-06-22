@@ -1,21 +1,17 @@
 package com.example.shoppinglist.Presentation
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.shoppinglist.Domain.BuyItem
+import com.example.shoppinglist.Domain.model.BuyItem
 import com.example.shoppinglist.Presentation.Constance.Constance
 import com.example.shoppinglist.R
 import com.example.shoppinglist.databinding.FragmentSingleItemScreenBinding
-import java.lang.RuntimeException
 
 class SingleItemScreenFragment : Fragment() {
     private lateinit var viewModelSingleItem: ViewModelSingleItem
