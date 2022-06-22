@@ -20,8 +20,11 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var vievModelMainActivity: VievModelMainActivity
     lateinit var shopListAdapter: ShopListAdapter
-    lateinit var binding: ActivityMainBinding
+
     lateinit var currentFrag: SingleItemScreenFragment
+
+    lateinit var binding: ActivityMainBinding
+
     var isLandScape = false
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -15,14 +15,8 @@ class ViewModelFactory : ViewModelProvider.Factory {
         }
         return result as T
 
-//        val result = if (modelClass.isAssignableFrom(ViewModelSingleItem::class.java)) {
-//            ViewModelSingleItem()
-//        } else {
-//            VievModelMainActivity()
-//        }
-//        return result as T
     }
 }
 
-fun Activity.factoryyy() = ViewModelFactory()
-fun Fragment.faaaactory() = ViewModelFactory()
+//fun Activity.factoryyy() = ViewModelFactory()
+//fun Fragment.faaaactory() = ViewModelFactory()
